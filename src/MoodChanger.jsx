@@ -4,41 +4,34 @@ class MoodChanger extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMood: 'happy',
-      face: ':-)',
-      currentMoodIdx: 0,
-      moods: ['happy', 'sad', 'angry', 'neutral']
+      currentMoodIdx: 0
     };
-
     this.changeMood = this.changeMood.bind(this);
   }
 
   changeMood(e) {
-    const moodsObj = {
-      happy: ':)',
-      sad: ':(',
-      angry: '>:(',
-      neutral: '-_-'
-    };
     let nextMoodIdx = this.state.currentMoodIdx + 1;
-    if (nextMoodIdx === this.state.moods.length) {
+    if (nextMoodIdx === this.props.moods.length) {
       nextMoodIdx = 0;
     }
     this.setState({
-      face: moodsObj[this.state.currentMood],
-      currentMood: this.state.moods[nextMoodIdx],
       currentMoodIdx: nextMoodIdx
     });
   }
 
   render() {
+    const face = this.props.moods[this.state.currentMoodIdx];
     return (
       <div>
-        <h1>{this.state.face}</h1>
+        <h1>{face}</h1>
         <button onClick={this.changeMood}> Change Mood </button>
       </div>
     );
   }
 }
+
+MoodChanger.defaultProps = {
+  moods: [':)', ':(', '>:(', '-_-'] // will come in as props
+};
 
 export default MoodChanger;
